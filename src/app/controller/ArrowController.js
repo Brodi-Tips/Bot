@@ -18,26 +18,16 @@ module.exports= class Main {
       const database = [...keep, ...add];
       await db.set([...keep, ...add]);
 
-      const keepedGames = keep.toString().split(",").join("\n✅ ")
-      .split(" vs ").join(" ```vs``` ");
-      const addedGames = add.toString().split(",").join("\n✅ ")
-      .split(" vs ").join(" ```vs``` ");
-      
-      let stringGames = '';
-      if(keepedGames.length >5){
-        stringGames = [...stringGames, '*Still:*']
-        stringGames = [...stringGames, '\n✅ ']
-        stringGames = [...stringGames, keepedGames]
-        stringGames = [...stringGames, '\n']
-      }
-      if(addedGames.length >5){
-        stringGames = [...stringGames, '*Newests:*']
-        stringGames = [...stringGames, '\n✅ ']
-        stringGames = [...stringGames, addedGames]
-        stringGames = [...stringGames, '\n']
+      let = stringGames;
+      if (add) {
+        if(add.length)
+          stringGames = '✅ ' + add.toString().split(",").join("\n✅ ");
       }
 
-      stringGames = stringGames.toString().split(",").join("")
+      if (oldGames) {
+        if(!oldGames.length)
+          stringGames = '✅ ' + keep.toString().split(",").join("\n✅ ");
+      }
 
       const result = await bot.sendMessage(stringGames);
       console.log(result);
