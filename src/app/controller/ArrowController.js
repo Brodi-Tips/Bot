@@ -18,21 +18,24 @@ module.exports= class Main {
       const database = [...keep, ...add];
       await db.set([...keep, ...add]);
 
-      let = stringGames;
+      let result;
       if (add) {
-        if(add.length)
-          stringGames = '✅ ' + add.toString().split(",").join("\n✅ ");
+        if(add.length){
+          const stringGames = '✅ ' + add.toString().split(",").join("\n✅ ");
+          result = await bot.sendMessage(stringGames);
+        }
       }
 
       if (oldGames) {
-        if(!oldGames.length)
-          stringGames = '✅ ' + keep.toString().split(",").join("\n✅ ");
+        if(!oldGames.length){
+          const stringGames = '✅ ' + keep.toString().split(",").join("\n✅ ");
+          result = await bot.sendMessage(stringGames);
+        }
       }
 
-      const result = await bot.sendMessage(stringGames);
       console.log(result);
 
-      res.send(database);
+      res.send({result,database});
     } catch (e) {
       res.statusCode = 500;
       res.setHeader("Content-Type", "text/html");
