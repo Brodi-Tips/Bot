@@ -3,7 +3,8 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
-    "start": "node ./src/index.js"
+    "start": "nodemon src/server.js",
+    "production": "node src/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
