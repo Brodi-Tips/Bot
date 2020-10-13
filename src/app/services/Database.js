@@ -1,16 +1,16 @@
-const fs = require("fs").promises;
-const fsAsync = require("fs");
+const fs  = require( "fs").promises;
+const fsAsync =require( "fs");
 
-export class Database {
-  path: string;
+module.exports= class Database {
   constructor() {
     this.path = "./database.json";
   }
 
-  public async get(): Promise<string[]> {
+   async get() {
     try {
       if (fsAsync.existsSync(this.path)) {
         const objJSON = await fs.readFile(this.path);
+        console.log(objJSON)
         const { games } = JSON.parse(objJSON);
 
         return games;
@@ -22,11 +22,13 @@ export class Database {
     }
   }
 
-  public async set(games: string[]): Promise<void> {
+   async set(games) {
     try {
-      if (games?.length) {
-        const context = JSON.stringify({ games });
-        await fs.writeFile(this.path, context);
+      if(games){
+        if (games.length) {
+          const context = JSON.stringify({ games });
+          await fs.writeFile(this.path, context);
+        }
       }
     } catch (error) {
       console.error(error);

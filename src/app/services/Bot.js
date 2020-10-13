@@ -1,12 +1,12 @@
-const TG = require("telegram-bot-api");
+const TG = require( "telegram-bot-api");
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') })
 
-export class Bot {
-  private token: string;
-  private chatId: string;
-  private api: any;
-  private mp: any;
+
+module.exports= class Bot {
 
   constructor() {
+  console.log(process.env.TOKEN)
     this.token = process.env.TOKEN;
     // Define your API object
     this.api = new TG({
@@ -22,7 +22,7 @@ export class Bot {
     this.chatId = process.env.CHAT_ID;
   }
 
-  async sendMessage(message: string): Promise<any> {
+  async sendMessage(message){
     return this.api.sendMessage({
       chat_id: this.chatId,
       text: message,
@@ -30,7 +30,7 @@ export class Bot {
     });
   }
 
-  async sendPhoto(message, pathBuffer): Promise<any> {
+  async sendPhoto(message, pathBuffer) {
     return this.api.sendPhoto({
       chat_id: this.chatId,
       caption: message,
