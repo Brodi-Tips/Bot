@@ -23,7 +23,8 @@ module.exports= class Main {
           const stringGames = add.toString().split(",").join("\n");
           await bot.sendMessage(stringGames);
         }
-      } else if (oldGames) {
+      }
+      if (oldGames) {
         if(!oldGames.length)
           {
             const stringGames = keep.toString().split(",").join("\n");

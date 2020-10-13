@@ -10,9 +10,7 @@ module.exports= class Database {
     try {
       if (fsAsync.existsSync(this.path)) {
         const objJSON = await fs.readFile(this.path);
-        console.log(objJSON)
         const { games } = JSON.parse(objJSON);
-
         return games;
       }
 

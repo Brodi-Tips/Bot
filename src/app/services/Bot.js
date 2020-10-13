@@ -2,11 +2,9 @@ const TG = require( "telegram-bot-api");
 const path = require('path')
 require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') })
 
-
 module.exports= class Bot {
 
   constructor() {
-  console.log(process.env.TOKEN)
     this.token = process.env.TOKEN;
     // Define your API object
     this.api = new TG({
