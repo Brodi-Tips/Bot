@@ -18,8 +18,10 @@ module.exports= class Main {
       const database = [...keep, ...add];
       await db.set([...keep, ...add]);
 
-      const keepedGames = keep.toString().split(",").join("\n✅ ");
-      const addedGames = add.toString().split(",").join("\n✅ ");
+      const keepedGames = keep.toString().split(",").join("\n✅ ")
+      .split(" vs ").join(" ```vs``` ");
+      const addedGames = add.toString().split(",").join("\n✅ ")
+      .split(" vs ").join(" ```vs``` ");
       
       let stringGames = '';
       if(keepedGames.length >5){
