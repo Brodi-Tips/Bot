@@ -21,7 +21,8 @@ module.exports= class Main {
       let result;
       if (add) {
         if(add.length){
-          const stringGames = '✅ ' + add.toString().split(",").join("\n✅ ");
+          const stringGames = '✅ ' + add.toString().split(",").join("\n✅ ")
+          .split(" vs ").join(" _vs_ ");
           result = await bot.sendMessage(stringGames);
         }
       }
