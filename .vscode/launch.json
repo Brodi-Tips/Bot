@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "command": "yarn production",
+            "name": "R start",
+            "request": "launch",
+            "type": "node-terminal"
+        }
+    ]
+}

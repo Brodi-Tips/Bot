@@ -18,19 +18,27 @@ module.exports= class Main {
       const database = [...keep, ...add];
       await db.set([...keep, ...add]);
 
-      if (add) {
-        if(add.length){
-          const stringGames = add.toString().split(",").join("\n");
-          await bot.sendMessage(stringGames);
-        }
+      const keepedGames = keep.toString().split(",").join("\n✅ ");
+      const addedGames = add.toString().split(",").join("\n✅ ");
+      
+      let stringGames = '';
+      if(keepedGames.length >5){
+        stringGames = [...stringGames, '*Still:*']
+        stringGames = [...stringGames, '\n✅ ']
+        stringGames = [...stringGames, keepedGames]
+        stringGames = [...stringGames, '\n']
       }
-      if (oldGames) {
-        if(!oldGames.length)
-          {
-            const stringGames = keep.toString().split(",").join("\n");
-            await bot.sendMessage(stringGames);
-          }      
+      if(addedGames.length >5){
+        stringGames = [...stringGames, '*Newests:*']
+        stringGames = [...stringGames, '\n✅ ']
+        stringGames = [...stringGames, addedGames]
+        stringGames = [...stringGames, '\n']
       }
+
+      stringGames = stringGames.toString().split(",").join("")
+
+      const result = await bot.sendMessage(stringGames);
+      console.log(result);
 
       res.send(database);
     } catch (e) {
