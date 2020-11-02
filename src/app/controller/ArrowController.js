@@ -1,13 +1,24 @@
 const  Database = require( "../services/Database");
 const  Games = require( "../services/Games");
 const  Bot  =require( "../services/Bot");
+const path = require('path')
+
+require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') })
 
 module.exports= class Main {
   static async update(req, res){
     try {
+      const token = process.env.TOKEN;
+      const chatIdGroup = process.env.CHAT_ID_GROUP;
+      const chatIdAdmin = process.env.CHAT_ID_ADMIN; 
+
+      const botGroup = new Bot(token,chatIdGroup);
+      const botAdmin = new Bot(token,chatIdAdmin);
+
       const games = new Games();
       const db = new Database();
-      const bot = new Bot();
+      
+      let result ={};
 
       const newGames = req.body.games;
       const oldGames = await db.get();
@@ -17,30 +28,33 @@ module.exports= class Main {
 
       const database = [...keep, ...add];
       await db.set([...keep, ...add]);
+      
+      const stringAdmin = {keep,add};
+      result.botAdmin = await botAdmin.sendMessage(stringAdmin.toString());
 
-      let result;
       if (add) {
         if(add.length){
           const stringGames = '✅ ' + add.toString().split(",").join("\n✅ ")
           .split(" vs ").join(" _vs_ ");
-          result = await bot.sendMessage(stringGames);
+          result.botGroup = await botGroup.sendMessage(stringGames);
         }
       }
 
       if (oldGames) {
         if(!oldGames.length){
           const stringGames = '✅ ' + keep.toString().split(",").join("\n✅ ");
-          result = await bot.sendMessage(stringGames);
+          result.botGroup = await botGroup.sendMessage(stringGames);
         }
       }
 
-      console.log(result);
-
-      res.send({result,database});
+      res.send({result, database});
     } catch (e) {
-      res.statusCode = 500;
-      res.setHeader("Content-Type", "text/html");
-      res.end("<h1>Internal Error</h1><p>Sorry, there was a problem</p>");
+      res.status(500).send({
+        error:true,
+        sucess:false,
+        messagem:e.message,
+        debug:e.stack,
+      })
       
       console.error(e);
     }
