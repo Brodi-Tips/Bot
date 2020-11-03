@@ -12,7 +12,6 @@ module.exports= class Games {
       const keep = union.filter(
         (each) => newGames.includes(each) && oldGames.includes(each)
       );
-      console.log(keep, add);
       this.games = { keep, add };
       }
     }
@@ -22,7 +21,6 @@ module.exports= class Games {
   }
 
   get(){
-    console.log(this.games);
     return this.games;
   }
 }

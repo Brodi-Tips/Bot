@@ -1,12 +1,15 @@
 const Database = require('../services/Database');
 const Games = require('../services/Games');
 const Bot = require('../services/Bot');
+const Message = require('../factories/Message');
 const path = require('path');
 
 require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') });
 
 module.exports = class Main {
   static async update(req, res) {
+    const db = new Database();
+
     try {
       const token = process.env.TOKEN;
       const chatIdGroup = process.env.CHAT_ID_GROUP;
@@ -16,7 +19,6 @@ module.exports = class Main {
       const botAdmin = new Bot(token, chatIdAdmin);
 
       const games = new Games();
-      const db = new Database();
 
       let result = {};
 
@@ -29,20 +31,21 @@ module.exports = class Main {
       const database = [...keep, ...add];
       await db.set([...keep, ...add]);
 
-      const addMessage =
-        '✅ ' + add.toString().split(' vs ').join(' _vs_ ').split(',').join('\n✅ ');
-      const keepMessage =
-        '✅ ' + keep.toString().split(' vs ').join(' _vs_ ').split(',').join('\n✅ ');
+      const msg = new Message(keep, add);
 
-      const adminMessage =
-        (add ? (add.length ? '*Add:*'.concat('\n') + addMessage : '') : '').concat('\n') +
-        (keep ? (keep.length ? '*Keep:*'.concat('\n') + keepMessage : '') : '').concat('\n');
+      const addMessage = msg.add();
+      const keepMessage = msg.keep();
+      const adminMessage = msg.admin();
 
-      result.botAdmin = await botAdmin.sendMessage(adminMessage);
+      console.log('add>>\n', addMessage);
+      console.log('keep>>\n', keepMessage);
+      console.log('admin>>\n', adminMessage);
 
       if (add) if (add.length) result.botGroup = await botGroup.sendMessage(addMessage);
 
       if (oldGames) if (!oldGames.length) result.botGroup = await botGroup.sendMessage(keepMessage);
+
+      if (adminMessage) if (adminMessage) result.botAdmin = await botAdmin.sendMessage(adminMessage);
 
       res.send({ result, database });
     } catch (e) {
@@ -52,6 +55,8 @@ module.exports = class Main {
         messagem: e.message,
         debug: e.stack,
       });
+
+      await db.rollback();
 
       console.error(e);
     }
