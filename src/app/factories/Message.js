@@ -1,5 +1,5 @@
 module.exports = class Message {
-  constructor(addData, keepDataremoveData) {
+  constructor(addData, keepData, removeData) {
     this.addData = addData;
     this.keepData = keepData;
     this.removeData = removeData;
