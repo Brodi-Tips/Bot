@@ -39,13 +39,14 @@ module.exports = class Main {
       let result = {};
 
       if (addMessage) {
-        // if (addMessage.length) result.botGroup = await botGroup.sendMessage(addMessage);
+         if (addMessage.length) result.botGroup = await botGroup.sendMessage(addMessage);
       }
 
       if (adminMessage) {
-        console.log(adminMessage);
         if (adminMessage.length) result.botAdmin = await botAdmin.sendMessage(adminMessage);
       }
+
+      console.log(adminMessage);
 
       res.send({ result, adminMessage });
     } catch (e) {
