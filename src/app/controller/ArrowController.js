@@ -18,8 +18,6 @@ module.exports = class Main {
       const chatIdGroup = process.env.CHAT_ID_GROUP;
       const chatIdAdmin = process.env.CHAT_ID_ADMIN;
 
-      console.log(token, chatIdAdmin, chatIdGroup);
-
       const botGroup = new Bot(token, chatIdGroup);
       const botAdmin = new Bot(token, chatIdAdmin);
 

@@ -4,13 +4,16 @@
   "private": true,
   "scripts": {
     "start": "clear && nodemon src/server.js",
+    "serve": "clear && pm2 restart src/server.js && pm2 monit",
     "production": "node src/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "global": "^4.4.0",
     "nodemon": "^2.0.6",
+    "pm2": "^4.5.0",
     "telegram-bot-api": "^2.0.1"
   }
 }
