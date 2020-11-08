@@ -1,5 +1,5 @@
 module.exports = class Games {
-  constructor(games) {
+  constructor(games = []) {
     this.games = games;
   }
 
@@ -17,6 +17,8 @@ module.exports = class Games {
     }
     if (!oldGames.length && newGames.length) this.games = { add: newGames, keep: [], remove: [] };
     if (!oldGames.length && !newGames.length) this.games = { add: [], keep: [], remove: [] };
+
+    return this;
   }
 
   get() {

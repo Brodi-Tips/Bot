@@ -24,10 +24,7 @@ module.exports = class Main {
       const newGames = new Sanitize(gamesDirty).get();
       const oldGames = await db.get();
 
-      const games = new Games(oldGames);
-
-      games.set(newGames, oldGames);
-      const { keep, add, remove } = games.get();
+      const { keep, add, remove } = new Games(oldGames).set(newGames, oldGames).get();
 
       await db.set([...keep, ...add]);
 
@@ -39,7 +36,7 @@ module.exports = class Main {
       let result = {};
 
       if (addMessage) {
-         if (addMessage.length) result.botGroup = await botGroup.sendMessage(addMessage);
+        if (addMessage.length) result.botGroup = await botGroup.sendMessage(addMessage);
       }
 
       if (adminMessage) {
