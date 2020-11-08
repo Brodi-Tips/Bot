@@ -1,4 +1,8 @@
 module.exports = class Games {
+  constructor(games) {
+    this.games = games;
+  }
+
   set(newGames = [], oldGames = []) {
     if (newGames.length && oldGames.length) {
       const add = newGames.filter((each) => !oldGames.includes(each));
