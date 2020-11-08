@@ -1,7 +1,8 @@
 module.exports = class Message {
-  constructor(keep, add) {
-    this._keep = keep;
-    this._add = add;
+  constructor(addData, keepDataremoveData) {
+    this.addData = addData;
+    this.keepData = keepData;
+    this.removeData = removeData;
   }
 
   isValid(messages) {
@@ -17,17 +18,22 @@ module.exports = class Message {
   }
 
   add() {
-    return this.factorie(this._add);
+    return this.factorie(this.addData);
   }
 
   keep() {
-    return this.factorie(this._keep);
+    return this.factorie(this.keepData);
+  }
+
+  remove() {
+    return this.factorie(this.removeData);
   }
 
   admin() {
     return (
-      (this.isValid(this._add) ? ('*Add:*\n' + this.add()).concat('\n') : '') +
-      (this.isValid(this._keep) ? ('*Keep:*\n' + this.keep()).concat('\n') : '')
+      (this.isValid(this.addData) ? ('*Add:*\n' + this.add()).concat('\n') : '') +
+      (this.isValid(this.keepData) ? ('*Keep:*\n' + this.keep()).concat('\n') : '') +
+      (this.isValid(this.removeData) ? ('*Remove:*\n' + this.remove()).concat('\n') : '')
     );
   }
 };

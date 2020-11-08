@@ -26,28 +26,26 @@ module.exports = class Main {
       const oldGames = await db.get();
 
       games.set(newGames, oldGames);
-      const { keep, add } = games.get();
+      const { keep, add, remove } = games.get();
 
-      const database = [...keep, ...add];
       await db.set([...keep, ...add]);
 
-      const msg = new Message(keep, add);
+      const msg = new Message(add, keep, remove);
 
       const addMessage = msg.add();
-      const keepMessage = msg.keep();
       const adminMessage = msg.admin();
 
-      console.log('add>>\n', addMessage);
-      console.log('keep>>\n', keepMessage);
-      console.log('admin>>\n', adminMessage);
+      console.log(adminMessage);
 
-      if (add) if (add.length) result.botGroup = await botGroup.sendMessage(addMessage);
+      if (addMessage) {
+        if (addMessage.length) result.botGroup = await botGroup.sendMessage(addMessage);
+      }
 
-      if (oldGames) if (!oldGames.length) result.botGroup = await botGroup.sendMessage(keepMessage);
+      if (adminMessage) {
+        if (adminMessage.length) result.botAdmin = await botAdmin.sendMessage(adminMessage);
+      }
 
-      if (adminMessage) if (adminMessage) result.botAdmin = await botAdmin.sendMessage(adminMessage);
-
-      res.send({ result, database });
+      res.send({ result, adminMessage });
     } catch (e) {
       res.status(500).send({
         error: true,
