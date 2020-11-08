@@ -8,12 +8,12 @@ require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') });
 
 module.exports = class Main {
   static async update(req, res) {
-    const db = new Database();
-
     try {
       const token = process.env.TOKEN;
       const chatIdGroup = process.env.CHAT_ID_GROUP;
       const chatIdAdmin = process.env.CHAT_ID_ADMIN;
+
+      const db = new Database();
 
       const botGroup = new Bot(token, chatIdGroup);
       const botAdmin = new Bot(token, chatIdAdmin);
