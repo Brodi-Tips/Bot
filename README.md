@@ -1,4 +1,4 @@
-# Arrow Tips
+# Brother Bet - Bot
 
 Private project to receive a notification after a new game started at Bet 365.
 
