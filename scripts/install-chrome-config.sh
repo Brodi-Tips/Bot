@@ -1,11 +1,11 @@
 #!/bin/bash
 
-install_chrome () {
-  if ! which "google-chrome" ; then
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub \
-    | sudo apt-key add -
-    echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' \
-    | sudo tee /etc/apt/sources.list.d/google-chrome.list
+install_chrome() {
+  if ! which "google-chrome"; then
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub |
+      sudo apt-key add -
+    echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' |
+      sudo tee /etc/apt/sources.list.d/google-chrome.list
     sudo apt-get update
     sudo apt install google-chrome-stable
   else
@@ -13,30 +13,29 @@ install_chrome () {
   fi
 }
 
-install_chrome_extension () {
+install_chrome_extension() {
   preferences_dir_path="/opt/google/chrome/extensions"
   pref_file_path="$preferences_dir_path/$1.json"
   upd_url="https://clients2.google.com/service/update2/crx"
   mkdir -p "$preferences_dir_path"
-  echo "{" > "$pref_file_path"
-  echo "  \"external_update_url\": \"$upd_url\"" >> "$pref_file_path"
-  echo "}" >> "$pref_file_path"
+  echo "{" >"$pref_file_path"
+  echo "  \"external_update_url\": \"$upd_url\"" >>"$pref_file_path"
+  echo "}" >>"$pref_file_path"
   echo Added \""$pref_file_path"\" ["$2"]
 }
 
-install_killer_chrome () {
+install_killer_chrome() {
   sudo apt install wmctrl
 }
 
 ## Installing Chrome
-echo "Installing Chrome!";
+echo "Installing Chrome!"
 install_chrome
 
 ## Installing Extension
-echo "Installing Extension!";
+echo "Installing Extension!"
 install_chrome_extension "cfhdojbkjhnklbpkdaibdccddilifddb" "custom javascrip for websites 2"
 
 ## Installing Killer of Chrome
-echo "Installing Killer of Chrome!";
+echo "Installing Killer of Chrome!"
 install_killer_chrome
-
