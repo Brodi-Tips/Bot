@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "clear && nodemon src/server.js",
-    "serve": "clear && pm2 start src/server.js && pm2 monit",
-    "production": "node src/server.js",
+    "serve": "pm2 kill && pm2 start src/server.js && pm2 monit",
+    "production": "clear && node src/server.js",
     "preinstall": "yarn global add pm2"
   },
   "dependencies": {

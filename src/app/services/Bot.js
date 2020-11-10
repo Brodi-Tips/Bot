@@ -1,7 +1,6 @@
-const TG = require( "telegram-bot-api");
+const TG = require('telegram-bot-api');
 
-module.exports= class Bot {
-
+module.exports = class Bot {
   constructor(token, chatId) {
     this.token = token;
     // Define your API object
@@ -11,19 +10,31 @@ module.exports= class Bot {
     // Define your message provider
     this.mp = new TG.GetUpdateMessageProvider();
     this.api.setMessageProvider(this.mp);
-    this.api.start().then(() => {
-      console.log("API is started");
-    });
+    this.api
+      .start()
+      .then(() => {
+        // console.log('API is started');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     this.chatId = chatId;
   }
 
-  async sendMessage(message){
-    return this.api.sendMessage({
-      chat_id: this.chatId,
-      text: message,
-      parse_mode: "Markdown",
-    });
+  async sendMessage(message) {
+    return this.api
+      .sendMessage({
+        chat_id: this.chatId,
+        text: message,
+        parse_mode: 'Markdown',
+      })
+      .then((sucess) => {
+        // console.log("sendmsgSuc",sucess);
+      })
+      .catch((err) => {
+        console.log('sendmsgErr', err);
+      });
   }
 
   async sendPhoto(message, pathBuffer) {
@@ -33,4 +44,4 @@ module.exports= class Bot {
       path: pathBuffer,
     });
   }
-}
+};

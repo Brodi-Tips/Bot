@@ -1,15 +1,9 @@
-const Database = require('../services/Database');
-const Games = require('../services/Games');
-const Bot = require('../services/Bot');
-const Message = require('../factories/Message');
 const path = require('path');
-const Sanitize = require('../services/Sanitize');
 
 require('dotenv').config({ path: path.resolve(__dirname, '../../../.env') });
 
 module.exports = class Main {
   static async update(req, res) {
-    const db = new Database();
 
     try {
       const { games: gamesDirty } = req.body;
@@ -24,9 +18,9 @@ module.exports = class Main {
       const newGames = new Sanitize(gamesDirty).get();
       const oldGames = await db.get();
 
-      await db.set(newGames);
-
       const { keep, add, remove } = new Games(oldGames).set(newGames, oldGames).get();
+
+      await db.set([...keep, ...add]);
 
       const msg = new Message(add, keep, remove);
 
@@ -36,7 +30,7 @@ module.exports = class Main {
       let result = {};
 
       if (addMessage) {
-        if (addMessage.length) result.botGroup = await botGroup.sendMessage(addMessage);
+        //if (addMessage.length) result.botGroup = await botGroup.sendMessage(addMessage);
       }
 
       if (adminMessage) {
@@ -44,10 +38,6 @@ module.exports = class Main {
       }
 
       console.log(adminMessage);
-      console.log('\n');
-      console.log('\n');
-      console.log('\n');
-      console.log({ keep, add, remove });
 
       res.send({ result, adminMessage });
     } catch (e) {
