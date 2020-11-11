@@ -22,34 +22,44 @@ module.exports = class Main {
       const botAdmin = new Bot(token, chatIdAdmin);
 
       const newGames = new Sanitize(gamesDirty).get();
-      const oldGames = await db.get();
 
-      await db.set(newGames);
+      if (newGames.length) {
+        await db.set(newGames);
 
-      const { keep, add, remove } = new Games(oldGames).set(newGames, oldGames).get();
+        const oldGames = await db.get();
 
-      const msg = new Message(add, keep, remove);
+        console.log({ newGames });
+        console.log('\n');
+        console.log('\n');
+        console.log('\n');
+        console.log({ oldGames });
 
-      const addMessage = msg.add();
-      const adminMessage = msg.admin();
+        const { keep, add, remove } = new Games(oldGames).set(newGames, oldGames).get();
 
-      let result = {};
+        const msg = new Message(add, keep, remove);
 
-      if (addMessage) {
-        if (addMessage.length) result.botGroup = await botGroup.sendMessage(addMessage);
+        const addMessage = msg.add();
+        const adminMessage = msg.admin();
+
+        let result = {};
+
+        if (addMessage) {
+          if (addMessage.length) result.botGroup = await botGroup.sendMessage(addMessage);
+        }
+
+        if (adminMessage) {
+          if (adminMessage.length) result.botAdmin = await botAdmin.sendMessage(adminMessage);
+        }
+
+        return res.send({ result, adminMessage });
       }
 
-      if (adminMessage) {
-        if (adminMessage.length) result.botAdmin = await botAdmin.sendMessage(adminMessage);
-      }
-
-      console.log(adminMessage);
-      console.log('\n');
-      console.log('\n');
-      console.log('\n');
-      console.log({ keep, add, remove });
-
-      res.send({ result, adminMessage });
+      throw {
+        error: true,
+        sucess: false,
+        messagem: 'No valid games',
+        debug: newGames,
+      };
     } catch (e) {
       res.status(500).send({
         error: true,
