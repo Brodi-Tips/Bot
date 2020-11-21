@@ -5,8 +5,7 @@
   "scripts": {
     "start": "clear && nodemon src/server.js",
     "serve": "pm2 kill && pm2 start src/server.js && pm2 monit",
-    "production": "clear && node src/server.js",
-    "preinstall": "yarn global add pm2"
+    "production": "clear && pm2 kill && node src/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

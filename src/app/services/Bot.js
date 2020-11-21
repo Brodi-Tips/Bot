@@ -16,25 +16,27 @@ module.exports = class Bot {
         // console.log('API is started');
       })
       .catch((err) => {
-        console.log(err);
+        console.log("Bot Starting... ", err);
       });
 
     this.chatId = chatId;
   }
 
   async sendMessage(message) {
-    return this.api
-      .sendMessage({
-        chat_id: this.chatId,
-        text: message,
-        parse_mode: 'Markdown',
-      })
-      .then((sucess) => {
-        // console.log("sendmsgSuc",sucess);
-      })
-      .catch((err) => {
-        console.log('sendmsgErr', err);
-      });
+    try {
+      return this.api
+        .sendMessage({
+          chat_id: this.chatId,
+          text: message,
+          parse_mode: 'Markdown',
+        })
+        .then((sucess) => {
+        });
+    } catch (error) {
+      console.log('Bot Send Msg... ', error);
+      console.log('Trying again at: ' + new Date(), error);
+      this.sendMessage(message);
+    }
   }
 
   async sendPhoto(message, pathBuffer) {
