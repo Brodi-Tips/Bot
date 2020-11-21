@@ -15,16 +15,12 @@ RUN echo headless | sudo -S yarn global add pm2
 
 RUN echo headless | sudo -S apt-get install xvfb
 
+RUN echo headless | sudo -S chmod +x /usr/src/app/*
+
+EXPOSE 3333
+
+CMD [ "yarn","serve" ]
 
 # RUN echo headless | sudo -S bash /usr/src/app/scripts/openCloseChromeHidden.sh
 
-# Add metadata to the image to describe which port the container is listening on at runtime.
-EXPOSE 3333
-
-# Run the specified command within the container.
-# CMD [ "yarn","serve" ]
-
-RUN echo headless | sudo -S apt-get upgrade
-
-RUN echo headless | sudo -S chmod +x /usr/src/app/*
 
