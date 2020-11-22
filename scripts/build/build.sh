@@ -12,7 +12,7 @@ sudo docker build -f ./Dockerfile -t futsal-bot .
 echo "Running image..."
 sudo docker run -t -d --name futsal futsal-bot
 
-sudo docker exec -d futsal bash /usr/src/app/scripts/openCloseChromeHidden.sh
+# sudo docker exec -d futsal bash /usr/src/app/scripts/openCloseChromeHidden.sh
 
 # Execute and show logs
 # sudo docker run -t -d futsal-bot

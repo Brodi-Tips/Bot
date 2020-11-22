@@ -3,11 +3,10 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
-    "start": "echo start",
+    "start": "node src/server.js",
     "nodemon": "clear && nodemon src/server.js",
     "serve": "pm2 kill && pm2 start src/server.js && pm2 monit",
-    "production": "pm2 kill && node src/server.js",
-    "poststart": "node src/server.js"
+    "production": "pm2 kill && node src/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

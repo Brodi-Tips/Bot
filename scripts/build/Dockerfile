@@ -21,6 +21,6 @@ RUN rm -rf ~/.config/google-chrome/Singleton*
 
 EXPOSE 3333
 
-CMD [ "yarn","start" ]
+CMD [ "yarn","serve" ]
 
 # RUN  bash /usr/src/app/scripts/openCloseChromeHidden.sh 
