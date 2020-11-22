@@ -17,10 +17,10 @@ RUN echo headless | sudo -S apt-get install xvfb
 
 RUN echo headless | sudo -S chmod +x /usr/src/app/*
 
+RUN rm -rf ~/.config/google-chrome/Singleton*
+
 EXPOSE 3333
 
 CMD [ "yarn","serve" ]
 
-# RUN echo headless | sudo -S bash /usr/src/app/scripts/openCloseChromeHidden.sh
-
-
+RUN cd /usr/src/app && yarn serve || bash /usr/src/app/scripts/openCloseChromeHidden.sh 
