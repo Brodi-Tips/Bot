@@ -1,6 +1,8 @@
 module.exports = class Sanitize {
   constructor(games) {
     this.games = games;
+    this.blackList = ['Apostas no Jogo', '3 Opções'];
+    this.whiteList = ['vs'];
   }
 
   isArray() {
@@ -10,15 +12,15 @@ module.exports = class Sanitize {
   }
 
   includesWhiteList() {
-    const whiteList = ['vs'];
-
-    return this.games.filter((game) => whiteList.map((key) => game.includes(key)).includes(true));
+    return this.games.filter((game) =>
+      this.whiteList.map((key) => game.includes(key)).includes(true),
+    );
   }
 
   removeBlackList() {
-    const blackList = ['Apostas no Jogo', '3 Opções'];
-
-    return this.games.filter((game) => !blackList.map((key) => game.includes(key)).includes(true));
+    return this.games.filter(
+      (game) => !this.blackList.map((key) => game.includes(key)).includes(true),
+    );
   }
 
   sanitize() {

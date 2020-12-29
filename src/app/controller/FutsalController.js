@@ -68,4 +68,16 @@ module.exports = class Main {
       console.error(e);
     }
   }
+
+  static async status(req, res) {
+    const db = new Database();
+    const oldGames = await db.get();
+
+    return res.status(201).send({
+      error: false,
+      sucess: true,
+      messagem: "I'm alive!",
+      debug: oldGames,
+    });
+  }
 };

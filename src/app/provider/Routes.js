@@ -1,7 +1,7 @@
-const express  =require( 'express');
-const ArrowController = require( '../controller/ArrowController');
+const express = require('express');
+const FutsalController = require('../controller/FutsalController');
 
-module.exports= class Routes {
+module.exports = class Routes {
   constructor() {
     this.routes = express.Router();
 
@@ -9,11 +9,12 @@ module.exports= class Routes {
   }
 
   init() {
-    this.map()
-    return this.routes
+    this.map();
+    return this.routes;
   }
 
   map() {
-    this.routes.post('/refresh', ArrowController.update);
+    this.routes.post('/refresh', FutsalController.update);
+    this.routes.get('/status', FutsalController.status);
   }
 };
