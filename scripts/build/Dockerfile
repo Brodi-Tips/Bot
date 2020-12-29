@@ -5,7 +5,7 @@ FROM juloko/futsal
 WORKDIR /usr/src/
 
 # Run the command inside your image filesystem.
-RUN echo headless | sudo -S git clone https://github.com/juloko/BrotherBet-Bot.git app
+RUN echo headless | sudo -S git clone https://github.com/Brother-Bet/Bot.git app
 
 WORKDIR /usr/src/app/
 
