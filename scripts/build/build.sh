@@ -11,7 +11,7 @@ echo "Removing all containers."
 sudo docker rm $(docker ps -a -q)
 
 echo "Building image..."
-sudo docker build -f ./Dockerfile -t futsal-bot .
+sudo docker build --no-cache -f ./Dockerfile -t futsal-bot . 
 
 echo "Running image with NoVNC."
 sudo docker run -d --name futsal -t futsal-bot
