@@ -9,15 +9,18 @@ sudo docker rm $(docker ps -a -q)
 echo "Building image..."
 sudo docker build -f ./Dockerfile -t futsal-bot .
 
-echo "Running image..."
-sudo docker run -t --name futsal futsal-bot
+echo "Running image with NoVNC."
+sudo docker run -d -p 3000:3333 -p 26901:6901 --name futsal -t futsal-bot
 
-echo "Opening chrome..."
-# sudo docker exec -d futsal bash /usr/src/app/scripts/openCloseChromeHidden.sh
+echo "OS Server"
+echo "Host NoVNC: http://172.17.0.2:6901/vnc_lite.html"
+echo "Password: headless"
+echo ""
 
-# Execute and show logs
-# sudo docker run -t futsal-bot
+# Enter execute.
+sudo docker exec -d -it futsal bash /usr/src/app/scripts/openCloseChromeHidden.sh
+sudo docker exec -d -it futsal node /usr/src/app/src/server.js
 
-# Enter execute and enter.
-sudo docker run -t -d --name futsal futsal-bot
-# sudo docker exec -it futsal /bin/bash
+echo "Node Server"
+echo "Host: http://172.17.0.2:3000"
+echo "Status: http://172.17.0.2:3000/status"

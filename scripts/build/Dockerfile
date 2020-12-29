@@ -21,9 +21,9 @@ RUN echo headless | sudo -S mkdir archive
 
 RUN echo headless | sudo -S rm -rf ~/.config/google-chrome/Singleton*
 
-EXPOSE 3333
+EXPOSE 3333 6901
 
-RUN  bash /usr/src/app/scripts/openCloseChromeHidden.sh & echo headless | sudo -S node src/server.js
+# RUN  bash /usr/src/app/scripts/openCloseChromeHidden.sh & echo headless | sudo -S node src/server.js
 
 # RUN yarn serve
 
