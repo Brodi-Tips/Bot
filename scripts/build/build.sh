@@ -18,7 +18,8 @@ echo "Password: headless"
 echo ""
 
 # Enter execute.
-sudo docker exec -d -it futsal bash /usr/src/app/scripts/openCloseChromeHidden.sh
+sudo docker exec -d -it futsal bash /usr/src/app/scripts/openCloseChrome.sh
+# sudo docker exec -d -it futsal bash /usr/src/app/scripts/openCloseChromeHidden.sh
 sudo docker exec -d -it futsal node /usr/src/app/src/server.js
 
 echo "Node Server"
