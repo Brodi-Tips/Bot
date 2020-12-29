@@ -14,7 +14,7 @@ echo "Building image..."
 sudo docker build -f ./Dockerfile -t futsal-bot .
 
 echo "Running image with NoVNC."
-sudo docker run -d -p 3000:3333 -p 26901:6901 --name futsal -t futsal-bot
+sudo docker run -d --name futsal -t futsal-bot
 
 echo "Executing scripts inside docker to open scraping in chrome."
 sudo docker exec -d -it futsal bash /usr/src/app/scripts/openCloseChrome.sh
@@ -30,5 +30,5 @@ echo "Password: headless"
 echo ""
 
 echo "Node Server"
-echo "Host: http://172.17.0.2:3000"
-echo "Status: http://172.17.0.2:3000/status"
+echo "Host: http://172.17.0.2:3333"
+echo "Status: http://172.17.0.2:3333/status"
